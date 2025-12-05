@@ -3,3 +3,5 @@ numpy
 pymongo
 certifi
 python-dotenv
+setuptools
+# -e .
