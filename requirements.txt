@@ -4,4 +4,6 @@ pymongo
 certifi
 python-dotenv
 setuptools
+pymongo[srv]==3.11
+
 # -e .
