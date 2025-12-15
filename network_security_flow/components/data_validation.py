@@ -107,6 +107,7 @@ class DataValidation:
                 drift_report_file_path = self.data_validation_config.data_drift_report_file_path,
 
             )
+            return data_validation_artifact
         except Exception as e:
             raise NetwrokExceptions(e,sys)
         
