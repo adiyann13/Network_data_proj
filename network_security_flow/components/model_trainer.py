@@ -14,6 +14,7 @@ from network_security_flow.utils.main_utils.utils import evaluate_models
 from sklearn.ensemble import RandomForestClassifier,AdaBoostClassifier,GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
+import mlflow
 
 
 class ModelTrainer:
@@ -23,6 +24,19 @@ class ModelTrainer:
             self.data_transform_artifacts =data_transform_artifacts
         except Exception as e:
             raise NetwrokExceptions(e,sys)
+    
+    def track_mlflow(self,best_model,clasificationmetric):
+        with mlflow.start_run():
+            f1_score = clasificationmetric.f1_score
+            precison_score = clasificationmetric.precision
+            recall_score = clasificationmetric.recall
+
+            mlflow.log_metric("fl_score", f1_score)
+            mlflow.log_metric("precision", precison_score)
+            mlflow.log_metric("recall", recall_score)
+
+            mlflow.sklearn.log_model(best_model, "model")
+
     
     def train_model(self,x_train,y_train, x_test, y_test):
         try:
@@ -67,9 +81,13 @@ class ModelTrainer:
             y_train_pred = best_model.predict(x_train)
             classification_train_metric = get_classification_score(y_true=y_train , y_pred = y_train_pred)
             
+            ##ml flow
+            self.track_mlflow(best_model , classification_train_metric)
 
             y_test_pred = best_model.predict(x_test)
             classification_test_metric = get_classification_score(y_true=y_test,y_pred=y_test_pred)
+
+            self.track_mlflow(best_model , classification_test_metric)
 
             preprocessor = load_object(file_path=self.data_transform_artifacts.transformed_object_file_path)
             model_dir_path = os.path.dirname(self.model_trainer_config.trained_model_file_path)
