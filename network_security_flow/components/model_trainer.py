@@ -15,7 +15,9 @@ from sklearn.ensemble import RandomForestClassifier,AdaBoostClassifier,GradientB
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 import mlflow
+import dagshub
 
+dagshub.init(repo_owner='adiyannmd', repo_name='Network_data_proj', mlflow=True)
 
 class ModelTrainer:
     def __init__(self, model_trainer_config:ModelTrainerConfig , data_transform_artifacts:DataTransformationArtifacts):
