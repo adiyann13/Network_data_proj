@@ -25,3 +25,16 @@ DATA_VALIDATION_VALID_DIR:str  = 'validated_data'
 DATA_VALIDATION_INVALID_DIR:str = 'invaled_data'
 DATA_VALIDATION_DRIFT_REPORT:str = 'data_drift'
 DATA_VALIDATION_FINAL_REPORT:str = 'report.yaml'
+
+PRE_PROCESSING_FILE:str = 'preprocessing.pkl'
+
+
+DATA_TRANSFORMATION_DIR_NAME:str = 'data_transformation'
+DATA_TRANSFORMATION_TRANSOFRMED_DATA_DIR:str = 'transformed'
+DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR:str = 'Ttransformed_object'
+
+DATA_TRANSFORMATION_IMPUTER_PARAMS:dict ={
+    "missing_values": np.nan,
+    'n_neighbors':3 , 
+    'weights':'uniform',
+}

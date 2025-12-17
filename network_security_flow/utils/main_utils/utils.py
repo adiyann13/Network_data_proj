@@ -27,3 +27,21 @@ def write_yaml_file(file_path:str , content:object , replace:bool =False)->None:
             yaml.dump(content , file)
     except Exception as e:
         raise NetwrokExceptions(e,sys)
+    
+def save_np_array(file_path:str,array:np.array):
+    try:
+        dir_path = os.path.dirname(file_path)
+        os.makedirs(dir_path,exist_ok=True)
+        with open(file_path , 'wb') as fl:
+            np.save(fl, array)
+    except Exception as e:
+        raise NetwrokExceptions(e,sys)
+
+def save_object(file_path:str, obj:object):
+    try:
+        dir_path =os.path.dirname(file_path)
+        os.makedirs(dir_path , exist_ok=True)
+        with open(file_path , 'wb') as fl2:
+            pickle.dump(obj , fl2)
+    except Exception as e:
+        raise NetwrokExceptions(e,sys)
