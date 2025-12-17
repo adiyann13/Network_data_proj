@@ -11,6 +11,9 @@ FILE_NAME:str = 'Website Phishing.csv'
 TRAIN_FILE_NAME:str = 'train.csv'
 TEST_FILE_NAME:str = 'test.csv'
 
+SAVED_MODEL_DIR:str = os.path.join("saved_models")
+MODEL_FILE_NAME:str = "model.pkl"
+
 DATA_INGESTION_COLLECTION_NAME:str = 'Network_Data'
 DATA_INDESTION_DATABASE_NAME:str = 'adiyannmd'
 DATA_INGESTION_DIR_NAME:str = 'data_ingestion_dir'
@@ -38,3 +41,10 @@ DATA_TRANSFORMATION_IMPUTER_PARAMS:dict ={
     'n_neighbors':3 , 
     'weights':'uniform',
 }
+
+
+MODEL_TRAINER_DIR_NAME:str = "model_trainer"
+MODEL_TRAINER_TRAINED_MODEL_DIR:str = "trained_model"
+MODEL_TRAINER_TRAINED_MODEL_NAME:str = "model.pkl"
+MODEL_TRAINER_EXPECTED_SCORE:float = 0.6
+MODEL_TRAINER_OVER_UNDER_FITTING_THRESHOLD:float = 0.05
