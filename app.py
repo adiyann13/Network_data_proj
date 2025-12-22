@@ -12,7 +12,9 @@ from uvicorn import run as app_run
 from fastapi.responses import Response
 from starlette.responses import RedirectResponse
 import pandas as pd
-
+from network_security_flow.utils.ml_utils.models.estimator import NetworkModel
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 ca = certifi.where()
 
@@ -49,6 +51,24 @@ async def train_route():
         train_pipeline = TrainingPipeline()
         train_pipeline.run_pipeline()
         return Response("training is done")
+    except Exception as e:
+        raise NetwrokExceptions(e,sys)
+
+@app.post('/predict')
+async def prediction(request:Request , file:UploadFile=File(...)):
+    try:
+        df = pd.read_csv(file.file)
+        # Drop the target column if present
+        if 'Result' in df.columns:
+            df = df.drop(columns=['Result'])
+        preprocessor = load_object('final_model/preprocessor.pkl')
+        final_model = load_object('final_model/model.pkl')
+        network_mod = NetworkModel(preprocessor=preprocessor, model=final_model)
+        y_pred = network_mod.predict(df)
+        df['predicted_data'] = y_pred
+        df.to_csv('predicted_data/output_data.csv')
+        values = df['predicted_data']
+        return values
     except Exception as e:
         raise NetwrokExceptions(e,sys)
 
